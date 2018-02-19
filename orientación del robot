@@ -1,0 +1,120 @@
+ //driver
+
+int IN1 = 10;
+int IN2 = 9;
+int IN3 = 5;    // Input3 conectada al pin 5
+int IN4 = 4;    // Input4 conectada al pin 4 
+int ENB = 3;
+int ENA = 11;
+long distancia;
+long tiempo;
+
+
+void setup() {
+
+   pinMode(12, OUTPUT); /*activación del pin 12 como salida: para el pulso ultrasónico*/
+   pinMode(11, INPUT); /*activación del pin 11 como entrada: tiempo del rebote del ultrasonido*/
+
+   
+
+ pinMode (IN1, OUTPUT);    // Input4 conectada al pin 4 
+ 
+  pinMode (IN2, OUTPUT);
+
+   pinMode (IN3, OUTPUT);    // Input4 conectada al pin 4 
+
+   pinMode (IN4, OUTPUT);
+
+   pinMode (ENA, OUTPUT);    // Input4 conectada al pin 4 
+
+  pinMode (ENB, OUTPUT);
+
+
+ Serial.begin (9600);
+
+}
+
+
+void loop() {
+
+
+
+
+  Serial.println("Distancia ");
+
+  Serial.println(distancia);
+
+  Serial.println(" cm");
+
+  delay(500);
+
+
+  do {
+
+digitalWrite(7,LOW); /* Por cuestión de estabilización del sensor*/
+
+  delayMicroseconds(5);
+
+  digitalWrite(7, HIGH); /* envío del pulso ultrasónico*/
+
+  delayMicroseconds(10);
+
+  tiempo=pulseIn(6, HIGH); /* Función para medir la longitud del pulso entrante. Mide el tiempo que transcurrido entre el envío
+
+  del pulso ultrasónico y cuando el sensor recibe el rebote, es decir: desde que el pin 8 empieza a recibir el rebote, HIGH, hasta que
+
+  deja de hacerlo, LOW, la longitud del pulso entrante*/
+
+  distancia= int(0.017*tiempo); /*fórmula para calcular la distancia obteniendo un valor entero*/
+
+  /*Monitorización en centímetros por el monitor serial*/
+
+ Serial.println("leyendo ");
+
+ delay(50);
+
+    digitalWrite (IN3, HIGH);
+
+  digitalWrite (IN4, LOW);
+
+   digitalWrite (IN1, LOW);
+
+  digitalWrite (IN2, HIGH);
+
+
+
+
+  analogWrite(ENB,185);
+
+  analogWrite(ENA,-185);
+
+  Serial.println("girando ");
+
+    // girar hacia la derecha 
+
+    }
+
+
+  while ( distancia > 50 );
+
+
+   analogWrite(ENB,0);
+
+   analogWrite(ENA,0);
+
+delay(1000);
+
+  
+
+  // para gira 90 
+
+  // if (distancia>70)
+
+  //girar 180 
+
+  // else if (distancia < 70 )
+
+ 
+   
+
+}
